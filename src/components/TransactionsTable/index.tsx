@@ -1,7 +1,9 @@
 import * as Style from './styles'
 import {useEffect, useState} from "react";
+import {api} from "../../services/api";
 
-type Moviments = {
+type TransactionsType = {
+    id: number;
     description: string;
     value: string;
     category: string;
@@ -9,26 +11,12 @@ type Moviments = {
 }
 
 export function TransactionsTable() {
-    const [moviments, setMoviments] = useState<Moviments[]>([])
+    const [transactions, setTransactions] = useState<TransactionsType[]>([])
 
     useEffect(() => {
-        let values = []
-        values.push({
-            description: 'Salario',
-            value: '4.500,00',
-            category: 'Entrada',
-            date: '05/11/2023',
-
-        })
-        values.push({
-            description: 'Mercado',
-            value: '500,00',
-            category: 'Saída',
-            date: '06/11/2023',
-
-        })
-        setMoviments(values)
-    })
+        api.get('http://localhost:3000/api/transactions')
+            .then(response => setTransactions(response.data))
+    }, [])
 
     const setClassName = (type: string) => {
         return type === 'Entrada' ? 'greenColor' : 'redColor';
@@ -46,7 +34,7 @@ export function TransactionsTable() {
                 </thead>
                 <tbody>
                 {
-                    moviments.map( item => {
+                    transactions.map( item => {
                         return (
                             <tr>
                                 <td>{item.description}</td>
