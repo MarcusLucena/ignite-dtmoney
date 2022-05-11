@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { darken, transparentize } from "polished";
 
 export const TitleModalTransactions = styled.h1`
   color: var(--text-title);
@@ -61,4 +62,51 @@ export const CloseNewTransactionModalButton = styled.button`
   &:hover {
     filter: brightness(0.5);
   }
+`
+
+export const TransactionTypeContainer = styled.div`
+  margin: 1rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+`
+
+type RadioBoxProps = {
+    isActive: boolean
+    activeColor: 'green' | 'red'
+}
+
+const colorsActived = {
+    green: '#33cc95',
+    red: '#e52e4d'
+}
+
+export const RadioBox = styled.button<RadioBoxProps>`
+    height: 4rem;
+    border: 1px solid #d7d7d7 !important;
+    border-radius: 0.25rem;
+    
+    background: ${ props => props.isActive ? transparentize(0.9, colorsActived[props.activeColor]) : 'transparent'} !important;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    transition: border-color 0.3s;
+    
+    &:hover {
+      border-color: ${darken(0.1, '#d7d7d7')};
+    }
+    
+    img {
+      width: 20px;
+      height: 20px;
+    }
+    
+    span {
+      display: inline-block;
+      margin-left: 1rem;
+      font-size: 1rem;
+      color: var(--text-title);
+    }
 `
